@@ -302,7 +302,7 @@ int main()
                             for(i=0;i<n;i++)
                             {
                                 if(deletename.compare(name[i])==0)
-                                if(strcmp(name[],deletename)==0)
+                                //if(strcmp(name[],deletename)==0)
                                 {
                                     for(int j=i;j<n-1;j++)
                                     {
@@ -324,6 +324,127 @@ int main()
                         }break;
                     }
                 }while(status.compare("Yes")==0);
+            }break;
+            case 7:{
+                int op;
+                int check = 0; // note check = 1 -> true or check = 0 -> false
+                // bool check = false;
+                string status;
+                do{
+                    cout<<"t\t\t\tSort by ID or Name?"<<endl;
+                    cout<<"\t\t\t\t[1. Sort ID   ]"<<endl;
+                    cout<<"\t\t\t\t[2. Sort Name ]"<<endl;
+                    cout<<"\t\t\t\tEnter Your Choice : ";cin>>op;
+                    switch(op){
+                        case 1:{
+                            int n_code,n_qty;
+                            string n_name;
+                            double n_total,n_pay,n_dis,n_tax,n_price;
+                            for(int i=0;i<n-1;i++)
+                            {
+                                for(int j=i+1;j<n;j++)
+                                {
+                                    if(code[i]>code[j])
+                                    {
+                                        n_code = code[i];
+                                        code[i] = code[j];
+                                        code[j] = n_code;
+
+                                        n_name = name[i];
+                                        name[i] = name[j];
+                                        name[j] = n_name;
+
+                                        n_qty = qty[i];
+                                        qty[i] = qty[j];
+                                        qty[j] = n_qty;
+
+                                        n_price = price[i];
+                                        price[i] = price[j];
+                                        price[j] = n_price;
+
+                                        n_total = total[i];
+                                        total[i] = total[j];
+                                        total[j] = n_total;
+
+                                        n_tax = tax[i];
+                                        tax[i] = tax[j];
+                                        tax[j] = n_tax;
+
+                                        n_dis = discount[i];
+                                        discount[i] = discount[j];
+                                        discount[j] = n_dis;
+
+                                        n_pay = payment[i];
+                                        payment[i] = payment[j];
+                                        payment[j] = n_pay;
+                                        check = 1;
+                                    }
+                                }
+                            }
+                            if(check==0)
+                            {
+                                cout<<"Sort not Successful....\n"<<endl;
+                            }
+                            else
+                            {
+                                cout<<"Sort Successful....\n"<<endl;
+                            }
+                        }break;
+                        case 2:{
+                            for(i=0;i<n;i++)
+                            {
+                                for(int j=i+1;j<n;j++)
+                                {
+                                    if(name[i].compare(name[j])>0)
+                                    {
+                                        swap(code[i],code[j]);
+                                        swap(name[i],name[j]);
+                                        swap(qty[i],qty[j]);
+                                        swap(price[i],price[j]);
+                                        swap(total[i],total[j]);
+                                        swap(tax[i],tax[j]);
+                                        swap(discount[i],discount[j]);
+                                        swap(payment[i],payment[j]);
+                                        check = 1;
+                                    }
+                                }
+                            }
+                            if(check==0)
+                            {
+                                cout<<"Sort not Successful....\n"<<endl;
+                            }
+                            else{
+                                cout<<"Sort Successful....\n"<<endl;
+                            }
+                        }break;
+                    }
+                }while(op!=0);
+            }break;
+            case 8:{
+                int add;
+                int b;
+                cout<<"Enter Add Product : ";cin>>add;
+                for(i=n;i<n+add;i++)
+                {
+                    AddProduct();
+                }
+                n+=add;
+                b=1;
+                if(b==0)
+                {
+                    cout<<"Error Add"<<endl;
+                }
+                else{
+                    cout<<"Add Successful....\n"<<endl;
+                }
+            }break;
+            case 9:{
+                double sum = 0;
+                for(i=0;i<n;i++)
+                {
+                    sum+=total[i];
+                }
+                cout<<"Total Sales : $"<<sum<<endl;
             }break;
         }
     }while(op!=0);
