@@ -18,7 +18,7 @@ int main()
             cout<<endl;
             for(j=0;j<col;j++)
             {
-                cout<<"    "<<j;
+                cout<<"["<<k<<"]"<<"["<<i<<"]"<<"["<<j<<"]"<<"     ";
             }
         }
     }
