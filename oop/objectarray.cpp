@@ -44,7 +44,11 @@ class Employee{
             return id;
         }
         string getName(){
-            this->name = name;
+            return name;
+        }
+        string getGender()
+        {
+            return gender;
         }
         double getSalary(){
             return salary;
@@ -104,24 +108,47 @@ int main()
                 }
             }break;
             case 3:{
+                int bools = 0; // false 1 -> true
                 bool check = false;
-                int searchid;
-                cout<<"Enter ID To Search : ";cin>>searchid;
-                for(i=0;i<n;i++){
-                    if(searchid==emp[i].getId())
-                    {
-                        emp[i].Display();
-                        check = true;
+                int searchid = 0;
+                cout<<"Enter Id to search : ";cin>>searchid;
+                if(searchid == 0)
+                {
+                    cout<<"Feild ID Null"<<endl;
+                    return 0;
+                }
+                else
+                {
+                    for(i=0;i<n;i++){
+                        if(emp[i].getId() == searchid){
+                            emp[i].Display();
+                            check = true;
+                            bools = 1;
+                            break;
+                        }
                     }
-                }
-                if(check==false){
-                    cout<<"Search id not found..."<<endl;
-                }
-                else{
-                    cout<<"Search found..."<<endl;
+                    if(bools == 0){
+                        cout<<"Employee Not Found....\n";
+                    }
+                    else
+                    {
+                        cout<<"Employee Found....\n";
+                    }
                 }
             }break;
         }
     }while(op!=0);
     return 0;
 }
+/*
+// object array
+obj[id name gender,salary]
+obj[i].id;
+obj[i].name;
+obj[i].gender;
+obj[i].salary;
+// input data
+obj[i].Input()
+obj[0] = {id,name,gender,salary}
+obj[1] = {id,name,gender,salary}
+obj[2] = {id,name,gender,salary} */
