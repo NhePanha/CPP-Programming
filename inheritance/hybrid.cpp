@@ -59,14 +59,41 @@ class Student:public Date{
         }
 };
 int main(){
-    Employee employee;
-    Student student;
-
-    employee.Input();
-    employee.Output();
-
-    student.Input();
-    student.Output();
+    vector<Person> persons;
+    vector<Student> students;
+    vector<Employee> employees;
+    int n;
+    cout<<"Enter Number of Persons : ";cin>>n;
+    for(int i=0;i<n;i++){
+        int choice;
+        cout<<"Enter 1 for Employee, 2 for Student : ";cin>>choice;
+        if(choice == 1){
+            Employee emp;
+            emp.Input();
+            employees.push_back(emp);
+        }
+        else if(choice == 2){
+            Student stu;
+            stu.Input();
+            students.push_back(stu);
+        }
+        else{
+            Person per;
+            per.Input();
+            persons.push_back(per);
+        }
+    }
+    cout<<"\nPersons : \n";
+    for(auto &person : persons)
+        person.Output();
+    cout<<"\nEmployees : \n";
+    for(auto &employee : employees){
+        employee.Output();
+    }
+    cout<<"\nStudents : \n";
+    for(auto &student : students){
+        student.Output();
+    }
 
     return 0;
 }
