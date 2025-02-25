@@ -13,14 +13,13 @@ class Time {
         this->h = h;
         this->m = m;
         this->s = s;
-
         // Normalize seconds
         if (this->s > 60) {
-            this->m += s / 60;
+            this->m += this->s / 60;
             this->s = this->s % 60; 
         }
         if (this->m > 60) {
-            this->h += m / 60;
+            this->h += this->m / 60;
             this->m = this->m % 60;
         }
     }
@@ -30,7 +29,7 @@ class Time {
 };
 
 int main() {
-    Time time(0,100,100);
+    Time time(0,0,5000);
     time.Output();  // Should correctly convert 5000 seconds to hours, minutes, and seconds
     return 0;
 }
