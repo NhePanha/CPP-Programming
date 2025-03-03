@@ -1,7 +1,6 @@
 #include <iostream>
-
+#include <windows.h>
 using namespace std;
-
 class Time {
     private:
         int h, m, s;
