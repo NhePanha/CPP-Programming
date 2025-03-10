@@ -12,64 +12,68 @@ using namespace std;
 #define RESET "\033[0m"
 
 // File stream
-fstream user;
+char username[100], email[100], password[100], confirm[100];
+fstream storage;
+bool signin = false;
 
-// User data
-string username, email, password, confirm;
-
-void Sign_Up() {
-    user.open("data_user.txt", ios::app);
-    if (!user.is_open()) {
-        cout << RED << "Error opening file!" << RESET << endl;
+void SignUp() {
+    storage.open("storage_us.txt", ios::app);
+    if (!storage.is_open()) {
+        cout << "Error opening file. Can't open file." << endl;
         return;
     }
-    
-    cout << CYAN << " ==========================================" << endl;
-    cout << CYAN << "| Enter Username   : " << MAGENTA; getline(cin, username);
-    cout << CYAN << "| Enter Email      : " << MAGENTA; getline(cin, email);
-    cout << CYAN << "| Enter Password   : " << MAGENTA; getline(cin, password);
-    cout << CYAN << "| Confirm Password : " << MAGENTA; getline(cin, confirm);
-    cout << CYAN << " ==========================================" << RESET << endl;
 
-    if (password != confirm) {
-        cout << RED << "Password and Confirm Password do not match!" << RESET << endl;
-        user.close();
+    cout <<RED<< "================================================" << endl;
+    cout <<BLUE<< "Enter your username   : "; cin >> username;
+    cout <<BLUE<< "Enter your email      : "; cin >> email;
+    cout <<BLUE<< "Enter your password   : "; cin >> password;
+    cout <<BLUE<< "Confirm your password : "; cin >> confirm;
+    cout <<RED<< "================================================" << endl;
+
+    // Check if passwords match
+    if (strcmp(password, confirm) != 0) {
+        cout <<RED<< "Passwords do not match!" << endl;
+        storage.close();
         return;
     }
-    // Write user data to file with separator
-    user <<"[ Username : "<< username << "] [ Email : " << email << "] [ Password : " << password <<"]"<< endl;
-    cout << GREEN << "Registration Successful!" << RESET << endl;
-    
-    user.close();
+
+    // Write to file
+    storage << username << " " << email << " " << password << endl;
+    storage.close();
+    cout <<GREEN<< "Sign Up Successfully!" << endl;
 }
 
-void Sign_In() {
-    ifstream user("data_user.txt");
-    if (!user.is_open()) {
-        cout << RED << "Error opening file!" << RESET << endl;
+void SignIn() {
+    storage.open("storage_us.txt", ios::in);
+    if (!storage.is_open()) {
+        cout <<RED<< "Error opening file. Can't open file." << endl;
         return;
     }
 
-    string entered_email, entered_password;
-    string stored_name, stored_email, stored_password;
-    cout << BLUE << "============ SIGN IN ============" << RESET << endl;
-    cout << BLUE << "| Enter Email      : " << MAGENTA;getline(cin, entered_email);
-    cout << BLUE << "| Enter Password   : " << MAGENTA;getline(cin, entered_password);
-    bool login_success = false;
-    // Read file line by line
-    while (user >> stored_name >> stored_email >> stored_password) {
-        if (entered_email == stored_email && entered_password == stored_password) {
-            login_success = true;
-            cout << GREEN << "Login Successful! Welcome, " << stored_name << "!" << RESET << endl;
+    char stored_username[100], stored_email[100], stored_password[100];
+    char new_email[100], new_password[100];
+
+    cout <<MAGENTA<< "================================================" << endl;
+    cout <<BLUE<< "Enter your email      : "; cin >> new_email;
+    cout <<BLUE<< "Enter your password   : "; cin >> new_password;
+    cout <<MAGENTA<< "================================================" << endl;
+
+    // Read from file
+    while (storage >> stored_username >> stored_email >> stored_password) {
+        if (strcmp(stored_email, new_email) == 0 && strcmp(stored_password, new_password) == 0) {
+            signin = true;
+            strcpy(username, stored_username); // Store the username
             break;
         }
     }
 
-    if (!login_success) {
-        cout << RED << "Invalid email or password!" << RESET << endl;
-    }
+    storage.close();
 
-    user.close();
+    if (signin) {
+        cout <<GREEN<< "Sign In Successfully! Welcome, Mr. " << username << endl;
+    } else {
+        cout <<RED<< "Invalid password or email!" << endl;
+    }
 }
 int main() {
     int choice;
@@ -78,9 +82,9 @@ int main() {
     cin.ignore();  // Ignore leftover newline character
 
     if (choice == 1) {
-        Sign_Up();
+        SignUp();
     } else if (choice == 2) {
-        Sign_In();
+        SignIn();
     } else {
         cout << RED << "Invalid option!" << RESET << endl;
     }
